@@ -1,15 +1,15 @@
 ## Routes
-Signup with new user (POST) : https://localhost:8000/signup 
+Signup with new user (POST) : http://localhost:8000/signup 
 
-Login with existing user (POST) : https://localhost:8000/login 
+Login with existing user (POST) : http://localhost:8000/login 
 
-Fetch user details (authorised)(GET) : https://localhost:8000/getuser 
+Fetch user details (authorised)(GET) : http://localhost:8000/getuser 
 
-Logout user (authorised)(DELETE) : https://localhost:8000/logout 
+Logout user (authorised)(DELETE) : http://localhost:8000/logout 
 
-Logout of all devices (authorised)(DELETE) : https://localhost:8000/logouts 
+Logout of all devices (authorised)(DELETE) : http://localhost:8000/logouts 
 
-Set the user domain (authorised)(PATCH) : https://localhost:8000/setdomain 
+Set the user domain (authorised)(PATCH) : http://localhost:8000/setdomain 
 
 
 ## copying the .env.example file to .env file
