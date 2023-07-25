@@ -9,5 +9,6 @@ router.post('/login', userController.login)
 router.get('/getuser',auth, userController.getUser)
 router.delete('/logout',auth, userController.logout)
 router.delete('/logouts',auth, userController.logoutAll)
+router.patch('/setdomain', auth, userController.setDomain)
 
 module.exports = router

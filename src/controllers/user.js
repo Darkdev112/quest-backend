@@ -7,7 +7,7 @@ const signup = async(req,res) => {
             return res.status(400).json({error : "Invalid credentials"})
         }
 
-        const user = new User({username, email, password})
+        const user = new User({username, email, password, domain : ""})
         await user.save()
 
         const token = await user.generateToken()
@@ -17,6 +17,16 @@ const signup = async(req,res) => {
     }
 }
 
+const setDomain = async(req,res) => {
+    try {
+        req.user.domain = req.body.addiction
+        const user = await req.user.save()
+        res.status(200).json({user})
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({error})
+    }
+}
 
 const login = async(req,res) => {
     try {
@@ -59,10 +69,12 @@ const logoutAll = async(req,res) => {
     }
 }
 
+
 module.exports = {
     login,
     signup,
     getUser,
     logout,
-    logoutAll
+    logoutAll,
+    setDomain
 }

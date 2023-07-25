@@ -23,7 +23,10 @@ const UserSchema = new mongoose.Schema({
     tokens : [{
         type : String,
         required : true
-    }]
+    }],
+    domain : {
+        type : String,
+    }
 },{
     strict : true,
     versionKey : false,
@@ -41,7 +44,7 @@ UserSchema.methods.toJSON = function(){
 UserSchema.methods.generateToken = async function(){
     const user = this
     const token = jwt.sign({username : user.username, email : user.email},process.env.JWT_SECRET,{
-        expiresIn : 20
+        expiresIn : 86400
     })
 
     user.tokens = user.tokens.concat(token)
