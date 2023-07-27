@@ -6,11 +6,11 @@ const QandaSchema = new mongoose.Schema({
         required : true,
     },
     theory : [{
-        questions : {
+        question : {
             type : String,
             required : true,
         },
-        answers : {
+        answer : {
             type : String,
         },
         credits : {
@@ -18,13 +18,17 @@ const QandaSchema = new mongoose.Schema({
         },
         priority : {
             type : Number
+        },
+        sense : {
+            type : Boolean     // basically whether the question is asked in a negative way or a positive way
         }
     }],
     owner : {
-        userId : {
-            type : mongoose.Schema.Types.ObjectId,
-            ref : 'User'
-        }
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'User'
+    },
+    recovery : {
+        type : Number,
     }
 })
 

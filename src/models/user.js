@@ -26,6 +26,10 @@ const UserSchema = new mongoose.Schema({
     }],
     domain : {
         type : String,
+    },
+    sessions : {
+        type : Number,
+        default : 0
     }
 },{
     strict : true,

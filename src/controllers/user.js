@@ -19,7 +19,7 @@ const signup = async(req,res) => {
 
 const setDomain = async(req,res) => {
     try {
-        req.user.domain = req.body.addiction
+        req.user.domain = req.body.domain.toLowerCase()
         const user = await req.user.save()
         res.status(200).json({user})
     } catch (error) {
