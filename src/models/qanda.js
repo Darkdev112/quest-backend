@@ -20,7 +20,7 @@ const QandaSchema = new mongoose.Schema({
             type : Number
         },
         sense : {
-            type : Boolean     // basically whether the question is asked in a negative way or a positive way
+            type : String     // basically whether the question is asked in a negative way or a positive way
         }
     }],
     owner : {

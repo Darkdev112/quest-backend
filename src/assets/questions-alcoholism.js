@@ -1,4 +1,4 @@
-{
+module.exports = {
     "intro" : [
         {
             "question" : "How often do you consume alcohol?",
@@ -37,7 +37,7 @@
         },
         {
             "question" : "How many times do u pee ,have acidic stomach and a disturbed sleep cycle",
-            "sense" : "biological",
+            "sense" : "factual",
             "priority" : 1
         },
         {
@@ -74,17 +74,17 @@
         },
         {
             "question" : "Change in body temperature",
-            "sense" : "biological",
+            "sense" : "factual",
             "priority" : 1
         },
         {
             "question" : "Have often you experienced memory lapses or blackouts during or after drinking?",
-            "sense" : "biological",
+            "sense" : "factual",
             "priority" : 1
         },
         {
             "question" : "How many times do u pee ,have acidic stomach and a disturbed sleep cycle",
-            "sense" : "biological",
+            "sense" : "factual",
             "priority" : 1
         } 
     ],

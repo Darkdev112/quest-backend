@@ -8,9 +8,9 @@ const makeQanda = async(req,res) => {
         if(qanda){
         return res.status(400).json({error : "error in make user"})
         }
-        const {intro,tracking} = require(`./assets/questions-${req.user.domain}.json`)
-        const newqanda = new Qanda({session : req.user.session, owner : req.user._id});
-        if(req.user.session == 0){
+        const {intro,tracking} = require(`../assets/questions-${req.user.domain}.js`)
+        const newqanda = new Qanda({session : req.user.sessions, owner : req.user._id});
+        if(req.user.sessions == 0){
             newqanda.theory = [...intro]
         }
         else{
@@ -21,6 +21,7 @@ const makeQanda = async(req,res) => {
         res.status(201).json({data : newqanda})
     }
     catch(error){
+        console.log(error);
         res.status(400).json({error})
     }
 }
@@ -74,7 +75,7 @@ const calcResult = async(req,res) => {
                 sense : th.sense
             }
         })
-        const result = calculate(qanda.theory)
+        const result = calculate(filter)
         qanda.recovery = result;
         await qanda.save();
         req.user.session =  req.user.session + 1 ;
