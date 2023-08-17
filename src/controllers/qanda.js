@@ -67,7 +67,7 @@ const getQuestions = async (req,res) => {
 
 const calcResult = async(req,res) => {
     try {
-        const qanda = await Qanda.findOne({owner : req.user._id, session : req.user.session});
+        const qanda = await Qanda.find({owner : req.user._id, session : req.user.session});
         const filter = qanda.theory.map((th) => {
             return {
                 credits : th.credits,

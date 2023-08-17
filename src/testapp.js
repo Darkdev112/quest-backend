@@ -1,6 +1,6 @@
 const vader = require('vader-sentiment')
 
-const input = 'Yes quite often';
+const input = 'Yes ,I consume it daily';
 const intensity = vader.SentimentIntensityAnalyzer.polarity_scores(input);
 console.log(input, "  ------->  " , intensity);
 
