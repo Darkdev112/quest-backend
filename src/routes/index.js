@@ -1,7 +1,11 @@
 const userRoute = require('./user')
-const qandaRoute = require('./qanda')
+const projectRoute = require('./project')
+const sessionRoute = require('./session')
+const questionRoute = require('./question')
 
 module.exports= {
     userRoute,
-    qandaRoute
+    projectRoute,
+    sessionRoute,
+    questionRoute
 }

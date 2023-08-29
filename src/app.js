@@ -3,7 +3,7 @@ const dotenv = require('dotenv').config({path : path.join(__dirname, '../config/
 
 const express = require('express')
 const cors = require('cors')
-const {userRoute, qandaRoute} = require('./routes')
+const {userRoute, projectRoute, sessionRoute, questionRoute} = require('./routes')
 
 require('./db/mongoose')
 const app = express();
@@ -14,7 +14,9 @@ app.use(cors({
 }))
 
 app.use(userRoute)
-app.use(qandaRoute)
+app.use(projectRoute)
+app.use(sessionRoute)
+app.use(questionRoute)
 
 app.get('/',async (req,res) => {
     res.status(200).send("Express App")

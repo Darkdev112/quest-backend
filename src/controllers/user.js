@@ -7,23 +7,12 @@ const signup = async(req,res) => {
             return res.status(400).json({error : "Invalid credentials"})
         }
 
-        const user = new User({username, email, password, domain : ""})
+        const user = new User({username, email, password})
         await user.save()
 
         const token = await user.generateToken()
         res.status(201).json({user,token})
     } catch (error) {
-        res.status(400).json({error})
-    }
-}
-
-const setDomain = async(req,res) => {
-    try {
-        req.user.domain = req.body.domain.toLowerCase()
-        const user = await req.user.save()
-        res.status(200).json({user})
-    } catch (error) {
-        console.log(error);
         res.status(400).json({error})
     }
 }
@@ -75,6 +64,5 @@ module.exports = {
     signup,
     getUser,
     logout,
-    logoutAll,
-    setDomain
+    logoutAll
 }

@@ -1,7 +1,11 @@
 const userController = require('./user')
-const qandaController = require('./qanda')
+const projectController = require('./project')
+const sessionController = require('./session')
+const questionController = require('./question')
 
 module.exports = {
     userController,
-    qandaController
+    projectController,
+    sessionController,
+    questionController,
 }

@@ -24,17 +24,16 @@ const UserSchema = new mongoose.Schema({
         type : String,
         required : true
     }],
-    domain : {
-        type : String,
-    },
-    sessions : {
-        type : Number,
-        default : 0
-    }
 },{
     strict : true,
     versionKey : false,
     timestamps : true
+})
+
+UserSchema.virtual('projects', {
+    ref : 'Project',
+    localField : '_id',
+    foreignField : 'owner'
 })
 
 UserSchema.methods.toJSON = function(){
