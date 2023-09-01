@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const {CustomError} = require('../helpers')
 
 const UserSchema = new mongoose.Schema({
     username : {
@@ -58,12 +59,12 @@ UserSchema.methods.generateToken = async function(){
 UserSchema.statics.findByCredentials = async(email, password) => {
     const oldUser = await User.findOne({email : email})
     if(!oldUser){
-        throw new Error('Unable to login!')
+        throw new CustomError('Unable to login')
     }
 
     const isValid = await bcrypt.compare(password, oldUser.password)
     if(!isValid){
-        throw new Error('Unable to login')
+        throw new CustomError('Unable to login')
     }
 
     return oldUser

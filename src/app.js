@@ -1,25 +1,36 @@
-const path = require('path')
-const dotenv = require('dotenv').config({path : path.join(__dirname, '../config/dev.env')})
-
 const express = require('express')
 const cors = require('cors')
-const {userRoute, projectRoute, sessionRoute, questionRoute} = require('./routes')
+const config = require('./config/config')
+const morgan = require("./config/morgan");
+const {userRoute, projectRoute, sessionRoute, questionRoute} = require('./api/routes')
+const {globalErrorHandler} = require('./api/middlewares')
+const {CustomError} = require('./api/helpers')
 
-require('./db/mongoose')
-const app = express();
+const appLoader = async(app) => {
+    app.get('/',(req,res) => {
+        res.status(200).end()
+    })
+    app.head('/',(req,res) => {
+        res.status(200).end()
+    })
 
-app.use(express.json())
-app.use(cors({
-    origin : process.env.CLIENT_URL
-}))
+    if(config.mode !== "test"){
+        app.use(morgan.successHandler);
+        app.use(morgan.errorHandler);
+    }
+    
+    app.use(express.json())
+    app.use(cors({
+        origin : config.client_url
+    }))
+    app.use(express.urlencoded({ extended: true }));
+    
+    app.use(userRoute)
+    app.use(projectRoute)
+    app.use(sessionRoute)
+    app.use(questionRoute)
+    
+    app.use(globalErrorHandler)
+}
 
-app.use(userRoute)
-app.use(projectRoute)
-app.use(sessionRoute)
-app.use(questionRoute)
-
-app.get('/',async (req,res) => {
-    res.status(200).send("Express App")
-})
-
-module.exports = app
+module.exports = appLoader
