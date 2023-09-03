@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
+const loadAgenda = require('../../db/agenda')
 const { Session, Project } = require('../models')
-const { asyncErrorHandler, CustomError, loadAgenda } = require('../helpers')
+const { asyncErrorHandler, CustomError } = require('../helpers')
 
 const startSessions = asyncErrorHandler(async (req, res) => {
     const agenda = await loadAgenda();
@@ -30,7 +31,7 @@ const startSessions = asyncErrorHandler(async (req, res) => {
 
     await new Promise((resolve) => agenda.once('ready', resolve))
 
-    agenda.processEvery(req.body.time)
+    agenda.processEvery('1 minute')
     agenda.start();
     agenda.every(req.body.time, `project_${req.params.id}`)
 

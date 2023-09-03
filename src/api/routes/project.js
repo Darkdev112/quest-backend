@@ -8,7 +8,6 @@ router.post('/makeproject',auth, projectController.makeProject)
 router.get('/getprojects', auth, projectController.getProjects)
 router.get('/getproject/:id', auth, projectController.getProject)
 router.delete('/quitproject/:id', auth, projectController.quitProject)
-router.patch('/resumeproject', auth,
-projectController.resumeProject)
+router.patch('/resumeproject',projectController.resumeProject)
 
 module.exports = router
