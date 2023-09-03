@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
 const {User} = require('../models')
+const config = require('../../config/config')
 const {CustomError} = require('../helpers')
 
 const auth = async (req,res,next) => {
@@ -9,7 +10,7 @@ const auth = async (req,res,next) => {
             throw new CustomError('Unauthorised Error', 401)
         }
         const token = authToken.split(' ')[1]
-        const {email}= jwt.verify(token, process.env.JWT_SECRET)
+        const {email}= jwt.verify(token, config.jwt_secret)
 
         const user = await User.findOne({email, tokens : token})
         if(!user){

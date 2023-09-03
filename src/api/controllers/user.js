@@ -16,6 +16,7 @@ const signup = asyncErrorHandler(async (req, res) => {
 
 const login = asyncErrorHandler(async (req, res) => {
     const user = await User.findByCredentials(req.body.email, req.body.password)
+    
     const token = await user.generateToken()
     res.status(200).json({ user, token })
 })

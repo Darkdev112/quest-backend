@@ -1,15 +1,40 @@
-const { ObjectId, default: mongoose } = require('mongoose')
+const mongoose = require('mongoose')
 const { Session, Project } = require('../models')
-const { asyncErrorHandler } = require('../helpers')
-const {CustomError} = require('../helpers')
+const { asyncErrorHandler, CustomError, loadAgenda } = require('../helpers')
 
-const makeSession = asyncErrorHandler(async (req, res) => {
-    const id = new mongoose.Types.ObjectId(req.params.id)
-    const sessions = await Session.find({ project: id })
+const startSessions = asyncErrorHandler(async (req, res) => {
+    const agenda = await loadAgenda();
 
-    const session = new Session({ project: id, session: sessions.length + 1 })
-    await session.save();
-    res.status(201).json({ session })
+    const project = await Project.findById(req.params.id)
+    if(!project){
+        throw new CustomError('Project not found', 404)
+    }
+
+    await project.populate('sessions')
+    if(project.sessions.length !== 0){
+        throw new CustomError('Project not found', 404)
+    } 
+
+    agenda.define(`project_${req.params.id}`,async (job) => {
+        const id = new mongoose.Types.ObjectId(job.attrs.name.split('_')[1])
+        const sessions = await Session.find({ project: id })
+        const object = {
+            project : id,
+        }
+
+        object.session = sessions.length === 0 ? sessions.length + 1 : sessions[sessions.length - 1].session + 1 
+
+        const session = new Session(object)
+        await session.save();
+    })
+
+    await new Promise((resolve) => agenda.once('ready', resolve))
+
+    agenda.processEvery(req.body.time)
+    agenda.start();
+    agenda.every(req.body.time, `project_${req.params.id}`)
+
+    res.status(201).json({ msg : 'Keep Tracking'})
 })
 
 
@@ -18,10 +43,10 @@ const updateSession = asyncErrorHandler(async (req, res) => {
     const id = new mongoose.Types.ObjectId(req.params.id)
     const session = await Session.findOne({ project: id, session: req.query.session });
     const project = await Project.findById(req.params.id)
+    
     if (!session) {
         throw new CustomError('Session not found',404)
     }
-
     if (session.answers.length !== 0) {
         throw new CustomError('Duplicate Found',400)
     }
@@ -78,7 +103,7 @@ const getSessions = asyncErrorHandler(async (req, res) => {
 })
 
 module.exports = {
-    makeSession,
+    startSessions,
     updateSession,
     calculateSession,
     getSessions,

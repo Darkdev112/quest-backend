@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const config = require('../../config/config')
 const {CustomError} = require('../helpers')
 
 const UserSchema = new mongoose.Schema({
@@ -47,7 +48,7 @@ UserSchema.methods.toJSON = function(){
 
 UserSchema.methods.generateToken = async function(){
     const user = this
-    const token = jwt.sign({username : user.username, email : user.email},process.env.JWT_SECRET,{
+    const token = jwt.sign({username : user.username, email : user.email},config.jwt_secret,{
         expiresIn : 86400
     })
 

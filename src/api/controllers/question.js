@@ -21,8 +21,7 @@ const enterQuestion = asyncErrorHandler(async (req, res) => {
 })
 
 const getQuestions = asyncErrorHandler(async (req, res) => {
-    const { addiction } = req.body
-    const questions = await Question.find({ addiction })
+    const questions = await Question.find({ addiction : req.body.addiction })
     res.status(200).send({ questions })
 })
 
