@@ -35,7 +35,7 @@ const startSessions = asyncErrorHandler(async (req, res) => {
     agenda.start();
     agenda.every(req.body.time, `project_${req.params.id}`)
 
-    res.status(201).json({ msg : 'Keep Tracking'})
+    res.status(201).json({ project })
 })
 
 
